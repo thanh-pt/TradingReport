@@ -169,19 +169,19 @@ namespace TradingReporter2
                         rpd.TotalProfit
                         );
                 }
-                if (rpd.DailyPL[DayOfWeek.Monday] > mMinProfit) grvWeeklyReport.Rows[lastIdx].Cells[1].Style.BackColor = System.Drawing.Color.GreenYellow;
-                if (rpd.DailyPL[DayOfWeek.Tuesday] > mMinProfit) grvWeeklyReport.Rows[lastIdx].Cells[2].Style.BackColor = System.Drawing.Color.GreenYellow;
-                if (rpd.DailyPL[DayOfWeek.Wednesday] > mMinProfit) grvWeeklyReport.Rows[lastIdx].Cells[3].Style.BackColor = System.Drawing.Color.GreenYellow;
-                if (rpd.DailyPL[DayOfWeek.Thursday] > mMinProfit) grvWeeklyReport.Rows[lastIdx].Cells[4].Style.BackColor = System.Drawing.Color.GreenYellow;
-                if (rpd.DailyPL[DayOfWeek.Friday] > mMinProfit) grvWeeklyReport.Rows[lastIdx].Cells[5].Style.BackColor = System.Drawing.Color.GreenYellow;
-                if (rpd.TotalProfit > mMinProfit) grvWeeklyReport.Rows[lastIdx].Cells[6].Style.BackColor = System.Drawing.Color.GreenYellow;
+                if (rpd.DailyPL[DayOfWeek.Monday] > mMinProfit) grvWeeklyReport.Rows[lastIdx].Cells[1].Style.BackColor = System.Drawing.Color.Honeydew;
+                if (rpd.DailyPL[DayOfWeek.Tuesday] > mMinProfit) grvWeeklyReport.Rows[lastIdx].Cells[2].Style.BackColor = System.Drawing.Color.Honeydew;
+                if (rpd.DailyPL[DayOfWeek.Wednesday] > mMinProfit) grvWeeklyReport.Rows[lastIdx].Cells[3].Style.BackColor = System.Drawing.Color.Honeydew;
+                if (rpd.DailyPL[DayOfWeek.Thursday] > mMinProfit) grvWeeklyReport.Rows[lastIdx].Cells[4].Style.BackColor = System.Drawing.Color.Honeydew;
+                if (rpd.DailyPL[DayOfWeek.Friday] > mMinProfit) grvWeeklyReport.Rows[lastIdx].Cells[5].Style.BackColor = System.Drawing.Color.Honeydew;
+                if (rpd.TotalProfit > mMinProfit) grvWeeklyReport.Rows[lastIdx].Cells[6].Style.BackColor = System.Drawing.Color.Honeydew;
 
-                if (rpd.DailyPL[DayOfWeek.Monday] < 0) grvWeeklyReport.Rows[lastIdx].Cells[1].Style.BackColor = System.Drawing.Color.Brown;
-                if (rpd.DailyPL[DayOfWeek.Tuesday] < 0) grvWeeklyReport.Rows[lastIdx].Cells[2].Style.BackColor = System.Drawing.Color.Brown;
-                if (rpd.DailyPL[DayOfWeek.Wednesday] < 0) grvWeeklyReport.Rows[lastIdx].Cells[3].Style.BackColor = System.Drawing.Color.Brown;
-                if (rpd.DailyPL[DayOfWeek.Thursday] < 0) grvWeeklyReport.Rows[lastIdx].Cells[4].Style.BackColor = System.Drawing.Color.Brown;
-                if (rpd.DailyPL[DayOfWeek.Friday] < 0) grvWeeklyReport.Rows[lastIdx].Cells[5].Style.BackColor = System.Drawing.Color.Brown;
-                if (rpd.TotalProfit < 0) grvWeeklyReport.Rows[lastIdx].Cells[6].Style.BackColor = System.Drawing.Color.Brown;
+                if (rpd.DailyPL[DayOfWeek.Monday] < 0) grvWeeklyReport.Rows[lastIdx].Cells[1].Style.BackColor = System.Drawing.Color.MistyRose;
+                if (rpd.DailyPL[DayOfWeek.Tuesday] < 0) grvWeeklyReport.Rows[lastIdx].Cells[2].Style.BackColor = System.Drawing.Color.MistyRose;
+                if (rpd.DailyPL[DayOfWeek.Wednesday] < 0) grvWeeklyReport.Rows[lastIdx].Cells[3].Style.BackColor = System.Drawing.Color.MistyRose;
+                if (rpd.DailyPL[DayOfWeek.Thursday] < 0) grvWeeklyReport.Rows[lastIdx].Cells[4].Style.BackColor = System.Drawing.Color.MistyRose;
+                if (rpd.DailyPL[DayOfWeek.Friday] < 0) grvWeeklyReport.Rows[lastIdx].Cells[5].Style.BackColor = System.Drawing.Color.MistyRose;
+                if (rpd.TotalProfit < 0) grvWeeklyReport.Rows[lastIdx].Cells[6].Style.BackColor = System.Drawing.Color.MistyRose;
             }
             // 2. Fill Overal Data
             txtTotalProfit.Text = mTotalProfit.ToString("###,###,###.##");
@@ -318,10 +318,14 @@ namespace TradingReporter2
                     {
                         tpCount++;
                         tpSum += td.ProfitLoss;
+                        grvDailyDetail.Rows[grvDailyDetail.Rows.Count - 1].Cells[0].Style.BackColor = System.Drawing.Color.Honeydew;
+                        grvDailyDetail.Rows[grvDailyDetail.Rows.Count - 1].Cells[1].Style.BackColor = System.Drawing.Color.Honeydew;
                     }
                     else if (td.ProfitLoss < 0)
                     {
                         slCount++;
+                        grvDailyDetail.Rows[grvDailyDetail.Rows.Count - 1].Cells[0].Style.BackColor = System.Drawing.Color.MistyRose;
+                        grvDailyDetail.Rows[grvDailyDetail.Rows.Count - 1].Cells[1].Style.BackColor = System.Drawing.Color.MistyRose;
                     }
                     else // BE case
                     {

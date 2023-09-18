@@ -17,6 +17,7 @@ namespace TradingReporter2
         private double mTotalProfit = 0;
         private double mMaxLoss = 0;
         private double mMinProfit = 0;
+        private int    mFirstWeek = 0;
         public MainForm()
         {
             InitializeComponent();
@@ -59,6 +60,7 @@ namespace TradingReporter2
             mReportDataList.Clear();
             mTotalProfit = 0;
             mMaxLoss = 0;
+            mFirstWeek = 0;
             double accSize = Decimal.ToDouble(numAccountSize.Value);
             mMinProfit = accSize / 100;
 
@@ -97,6 +99,7 @@ namespace TradingReporter2
                     reportData.DailyPL.Add(DayOfWeek.Thursday, 0);
                     reportData.DailyPL.Add(DayOfWeek.Friday, 0);
                     mReportDataList.Add(reportData);
+                    if (mFirstWeek == 0) mFirstWeek = cw;
                 }
 
                 // 3. Add data to Weekly Report
@@ -278,6 +281,9 @@ namespace TradingReporter2
             {
                 return;
             }
+
+            int rowIndex = (int)(grvWeeklyReport.Rows[e.RowIndex].Cells[0].Value) - mFirstWeek;
+
             DayOfWeek dayOfWeek = DayOfWeek.Sunday;
             switch (e.ColumnIndex)
             {
@@ -301,7 +307,7 @@ namespace TradingReporter2
                 {
                     continue;
                 }
-                foreach (TradeData td in mReportDataList[e.RowIndex].DailyDetail[d])
+                foreach (TradeData td in mReportDataList[rowIndex].DailyDetail[d])
                 {
                     if (beginDate == "") beginDate = td.OpenTime.ToString("dd/MM/yyyy");
                     else

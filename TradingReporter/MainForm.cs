@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using SpreadsheetLight;
 
@@ -18,6 +19,9 @@ namespace TradingReporter2
         private double mMaxLoss = 0;
         private double mMinProfit = 0;
         private int    mFirstWeek = 0;
+        private TimeSpan mTimeAsian = new TimeSpan(2, 0, 0);   // 02:00 AM
+        private TimeSpan mTimeLondon = new TimeSpan(10, 0, 0);  // 10:00 PM
+        private TimeSpan mTimeNewyork = new TimeSpan(15, 0, 0);  // 15:00 PM
         public MainForm()
         {
             InitializeComponent();
@@ -51,6 +55,23 @@ namespace TradingReporter2
             }
         }
 
+        private string getSession(TimeSpan time, bool isShort=false)
+        {
+            string session = "";
+            if (time >= mTimeAsian && time < mTimeLondon)
+            {
+                session = (isShort ? "As" : "Asian");
+            }
+            else if (time >= mTimeLondon && time < mTimeNewyork)
+            {
+                session = (isShort ? "LD" : "London");
+            }
+            else
+            {
+                session = (isShort ? "NY" : "NewYork");
+            }
+            return session;
+        }
         private void reloadTradeDataToTable()
         {
             // Fill data to raw table
@@ -69,9 +90,8 @@ namespace TradingReporter2
             int tpCount = 0;
             int slCount = 0;
 
-            // A. Handle Report Data
+            #region A. Handle Report Data
             ReportData reportData = new ReportData();
-            DayOfWeek curDayOfWeek = DayOfWeek.Sunday;
             foreach (TradeData tradeData in mTradeDataList)
             {
                 // 1. Check Cw and Day of Week
@@ -123,29 +143,12 @@ namespace TradingReporter2
                     tpCount++;
                     tpSum += tradeData.ProfitLoss;
                 }
-                // 5. Fill Raw data
-                if (curDayOfWeek == DayOfWeek.Sunday) curDayOfWeek = dayOfWeek;
-                if (curDayOfWeek != dayOfWeek)
-                {
-                    curDayOfWeek = dayOfWeek;
-                    grvRaw.Rows.Add(
-                    grvRaw.Rows.Count,
-                    "",
-                    "",
-                    ""
-                    );
-                }
-                grvRaw.Rows.Add(
-                    grvRaw.Rows.Count,
-                    cw,
-                    curDayOfWeek.ToString(),
-                    tradeData.ProfitLoss
-                    );
             }
+            #endregion
 
-            // B. Fill Data
+            #region B. Fill Data
             // 1. Fill Weekly Report
-            foreach (ReportData rpd in mReportDataList)
+            foreach (ReportData rpd in mReportDataList.AsEnumerable().Reverse())
             {
                 int lastIdx = grvWeeklyReport.Rows.Count;
                 if (bRRDisplay.Checked)
@@ -194,6 +197,67 @@ namespace TradingReporter2
 
             txtWinrate.Text = ((float)tpCount / (tpCount + slCount)).ToString("###.##%");
             txtAvgRR.Text = (tpSum / tpCount / (accSize/100)).ToString("##.# R");
+            #endregion
+
+            #region C. Fill Raw data
+            int countAsianWin = 0;
+            int countAsianLoss = 0;
+            int countAsianBE = 0;
+            int countLondonWin = 0;
+            int countLondonLoss = 0;
+            int countLondonBE = 0;
+            int countNYWin = 0;
+            int countNYLoss = 0;
+            int countNYBE = 0;
+            foreach (TradeData tradeData in mTradeDataList)
+            {
+                int cw = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(tradeData.OpenTime, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+                DayOfWeek dayOfWeek = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(tradeData.OpenTime);
+
+                string session = getSession(tradeData.OpenTime.TimeOfDay);
+                if (session == "Asian")
+                {
+                    if (tradeData.ProfitLoss > mMinProfit) countAsianWin++;
+                    else if (tradeData.ProfitLoss < 0)     countAsianLoss++;
+                    else                                   countAsianBE++;
+                }
+                else if (session == "London")
+                {
+                    if (tradeData.ProfitLoss > mMinProfit) countLondonWin++;
+                    else if (tradeData.ProfitLoss < 0)     countLondonLoss++;
+                    else                                   countLondonBE++;
+                }
+                else
+                {
+                    if (tradeData.ProfitLoss > mMinProfit) countNYWin++;
+                    else if (tradeData.ProfitLoss < 0)     countNYLoss++;
+                    else                                   countNYBE++;
+                }
+                grvRaw.Rows.Add(
+                    grvRaw.Rows.Count,
+                    cw,
+                    dayOfWeek.ToString().Substring(0, 3),
+                    session,
+                    tradeData.ProfitLoss
+                    );
+            }
+            txtInfoAsian.Text = (countAsianWin+ countAsianLoss).ToString("Asian: Total(###) ")
+                              + (countAsianWin).ToString("Win(##) ")
+                              + (countAsianLoss).ToString("Loss(##) ")
+                              + (countAsianBE).ToString("BE(##) ")
+                              + ((float)(countAsianWin)/(countAsianWin+countAsianLoss)).ToString(" | WinRate (##.#%)");
+            txtInfoLondon.Text = (countLondonWin + countLondonLoss).ToString("London: Total(###) ")
+                              + (countLondonWin).ToString("Win(##) ")
+                              + (countLondonLoss).ToString("Loss(##) ")
+                              + (countLondonBE).ToString("BE(##) ")
+                              + ((float)(countLondonWin) / (countLondonWin + countLondonLoss)).ToString(" | WinRate (##.#%)");
+            txtInfoNY.Text = (countNYWin + countNYLoss).ToString("NY: Total(###) ")
+               + (countNYWin).ToString("Win(##) ")
+               + (countNYLoss).ToString("Loss(##) ")
+               + (countNYBE).ToString("BE(##) ")
+               + ((float)(countNYWin) / (countNYWin + countNYLoss)).ToString(" | WinRate (##.#%)");
+
+            #endregion
         }
 
         private void readingTradeDataFromFile(string filePath)
@@ -316,7 +380,8 @@ namespace TradingReporter2
                         if (endDate != thisDay) endDate = thisDay;
                     }
                     grvDailyDetail.Rows.Add(
-                        grvDailyDetail.Rows.Count + 1,
+                        (grvDailyDetail.Rows.Count + 1).ToString("D2"),
+                        getSession(td.OpenTime.TimeOfDay, true),
                         td.ProfitLoss
                         );
                     tradeCount++;
@@ -326,12 +391,14 @@ namespace TradingReporter2
                         tpSum += td.ProfitLoss;
                         grvDailyDetail.Rows[grvDailyDetail.Rows.Count - 1].Cells[0].Style.BackColor = System.Drawing.Color.Honeydew;
                         grvDailyDetail.Rows[grvDailyDetail.Rows.Count - 1].Cells[1].Style.BackColor = System.Drawing.Color.Honeydew;
+                        grvDailyDetail.Rows[grvDailyDetail.Rows.Count - 1].Cells[2].Style.BackColor = System.Drawing.Color.Honeydew;
                     }
                     else if (td.ProfitLoss < 0)
                     {
                         slCount++;
                         grvDailyDetail.Rows[grvDailyDetail.Rows.Count - 1].Cells[0].Style.BackColor = System.Drawing.Color.MistyRose;
                         grvDailyDetail.Rows[grvDailyDetail.Rows.Count - 1].Cells[1].Style.BackColor = System.Drawing.Color.MistyRose;
+                        grvDailyDetail.Rows[grvDailyDetail.Rows.Count - 1].Cells[2].Style.BackColor = System.Drawing.Color.MistyRose;
                     }
                     else // BE case
                     {

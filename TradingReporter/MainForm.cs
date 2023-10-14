@@ -14,11 +14,10 @@ namespace TradingReporter2
         const int INDEX_CLOSETIME = 9;
         const int INDEX_PL = 11;
         private List<TradeData> mTradeDataList = new List<TradeData>();
-        private List<ReportData> mReportDataList = new List<ReportData>();
+        private Dictionary<int, ReportData> mReportDatas = new Dictionary<int, ReportData>();
         private double mTotalProfit = 0;
         private double mMaxLoss = 0;
         private double mMinProfit = 0;
-        private int    mFirstWeek = 0;
         private TimeSpan mTimeAsian = new TimeSpan(2, 0, 0);   // 02:00 AM
         private TimeSpan mTimeLondon = new TimeSpan(10, 0, 0);  // 10:00 PM
         private TimeSpan mTimeNewyork = new TimeSpan(15, 0, 0);  // 15:00 PM
@@ -78,10 +77,9 @@ namespace TradingReporter2
             // clear old data
             grvRaw.Rows.Clear();
             grvWeeklyReport.Rows.Clear();
-            mReportDataList.Clear();
+            mReportDatas.Clear();
             mTotalProfit = 0;
             mMaxLoss = 0;
-            mFirstWeek = 0;
             double accSize = Decimal.ToDouble(numAccountSize.Value);
             mMinProfit = accSize / 100;
 
@@ -118,8 +116,7 @@ namespace TradingReporter2
                     reportData.DailyPL.Add(DayOfWeek.Wednesday, 0);
                     reportData.DailyPL.Add(DayOfWeek.Thursday, 0);
                     reportData.DailyPL.Add(DayOfWeek.Friday, 0);
-                    mReportDataList.Add(reportData);
-                    if (mFirstWeek == 0) mFirstWeek = cw;
+                    mReportDatas[cw] = reportData;
                 }
 
                 // 3. Add data to Weekly Report
@@ -148,9 +145,11 @@ namespace TradingReporter2
 
             #region B. Fill Data
             // 1. Fill Weekly Report
-            foreach (ReportData rpd in mReportDataList.AsEnumerable().Reverse())
+            ReportData rpd;
+            foreach (KeyValuePair<int, ReportData> item in mReportDatas.Reverse())
             {
                 int lastIdx = grvWeeklyReport.Rows.Count;
+                rpd = item.Value;
                 if (bRRDisplay.Checked)
                 {
                     grvWeeklyReport.Rows.Add(
@@ -346,7 +345,7 @@ namespace TradingReporter2
                 return;
             }
 
-            int rowIndex = (int)(grvWeeklyReport.Rows[e.RowIndex].Cells[0].Value) - mFirstWeek;
+            int rowIndex = (int)(grvWeeklyReport.Rows[e.RowIndex].Cells[0].Value);
 
             DayOfWeek dayOfWeek = DayOfWeek.Sunday;
             switch (e.ColumnIndex)
@@ -371,7 +370,7 @@ namespace TradingReporter2
                 {
                     continue;
                 }
-                foreach (TradeData td in mReportDataList[rowIndex].DailyDetail[d])
+                foreach (TradeData td in mReportDatas[rowIndex].DailyDetail[d])
                 {
                     if (beginDate == "") beginDate = td.OpenTime.ToString("dd/MM/yyyy");
                     else

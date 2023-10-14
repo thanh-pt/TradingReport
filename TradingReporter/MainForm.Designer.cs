@@ -53,6 +53,9 @@
             this.txtDetailTpBeSl = new System.Windows.Forms.Label();
             this.txtDetailTongLenh = new System.Windows.Forms.Label();
             this.grvDailyDetail = new System.Windows.Forms.DataGridView();
+            this.No = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Ss = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -72,21 +75,18 @@
             this.numAccountSize = new System.Windows.Forms.NumericUpDown();
             this.btnReload = new System.Windows.Forms.Button();
             this.tabRaw = new System.Windows.Forms.TabPage();
+            this.txtInfoNY = new System.Windows.Forms.Label();
+            this.txtInfoLondon = new System.Windows.Forms.Label();
+            this.txtInfoAsian = new System.Windows.Forms.Label();
             this.grvRaw = new System.Windows.Forms.DataGridView();
-            this.cbbFilePath = new System.Windows.Forms.ComboBox();
-            this.btnRemove = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OrderNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OpenTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Session = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProfitLoss = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtInfoAsian = new System.Windows.Forms.Label();
-            this.txtInfoLondon = new System.Windows.Forms.Label();
-            this.txtInfoNY = new System.Windows.Forms.Label();
-            this.No = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Ss = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cbbFilePath = new System.Windows.Forms.ComboBox();
+            this.btnRemove = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl.SuspendLayout();
             this.tabWeeklyReport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grvWeeklyReport)).BeginInit();
@@ -184,7 +184,7 @@
             this.Monday.HeaderText = "Mon";
             this.Monday.Name = "Monday";
             this.Monday.ReadOnly = true;
-            this.Monday.Width = 70;
+            this.Monday.Width = 60;
             // 
             // Tuesday
             // 
@@ -194,7 +194,7 @@
             this.Tuesday.HeaderText = "Tue";
             this.Tuesday.Name = "Tuesday";
             this.Tuesday.ReadOnly = true;
-            this.Tuesday.Width = 70;
+            this.Tuesday.Width = 60;
             // 
             // Wednesday
             // 
@@ -204,7 +204,7 @@
             this.Wednesday.HeaderText = "Wed";
             this.Wednesday.Name = "Wednesday";
             this.Wednesday.ReadOnly = true;
-            this.Wednesday.Width = 70;
+            this.Wednesday.Width = 60;
             // 
             // Thursday
             // 
@@ -214,7 +214,7 @@
             this.Thursday.HeaderText = "Thu";
             this.Thursday.Name = "Thursday";
             this.Thursday.ReadOnly = true;
-            this.Thursday.Width = 70;
+            this.Thursday.Width = 60;
             // 
             // Friday
             // 
@@ -224,7 +224,7 @@
             this.Friday.HeaderText = "Fri";
             this.Friday.Name = "Friday";
             this.Friday.ReadOnly = true;
-            this.Friday.Width = 70;
+            this.Friday.Width = 60;
             // 
             // TOTAL
             // 
@@ -313,6 +313,27 @@
             this.grvDailyDetail.ShowRowErrors = false;
             this.grvDailyDetail.Size = new System.Drawing.Size(129, 471);
             this.grvDailyDetail.TabIndex = 0;
+            // 
+            // No
+            // 
+            this.No.HeaderText = "No.";
+            this.No.Name = "No";
+            this.No.ReadOnly = true;
+            this.No.Width = 30;
+            // 
+            // Ss
+            // 
+            this.Ss.HeaderText = "Ss.";
+            this.Ss.Name = "Ss";
+            this.Ss.ReadOnly = true;
+            this.Ss.Width = 30;
+            // 
+            // Profit
+            // 
+            this.Profit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Profit.HeaderText = "Profit";
+            this.Profit.Name = "Profit";
+            this.Profit.ReadOnly = true;
             // 
             // label7
             // 
@@ -516,10 +537,37 @@
             this.tabRaw.Location = new System.Drawing.Point(4, 26);
             this.tabRaw.Name = "tabRaw";
             this.tabRaw.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRaw.Size = new System.Drawing.Size(637, 500);
+            this.tabRaw.Size = new System.Drawing.Size(644, 500);
             this.tabRaw.TabIndex = 0;
             this.tabRaw.Text = "Raw data";
             this.tabRaw.UseVisualStyleBackColor = true;
+            // 
+            // txtInfoNY
+            // 
+            this.txtInfoNY.AutoSize = true;
+            this.txtInfoNY.Location = new System.Drawing.Point(3, 399);
+            this.txtInfoNY.Name = "txtInfoNY";
+            this.txtInfoNY.Size = new System.Drawing.Size(350, 18);
+            this.txtInfoNY.TabIndex = 1;
+            this.txtInfoNY.Text = "Asian: Total(###) Win(##) Loss(##) BE(##) | WinRate (##.#%)";
+            // 
+            // txtInfoLondon
+            // 
+            this.txtInfoLondon.AutoSize = true;
+            this.txtInfoLondon.Location = new System.Drawing.Point(3, 367);
+            this.txtInfoLondon.Name = "txtInfoLondon";
+            this.txtInfoLondon.Size = new System.Drawing.Size(350, 18);
+            this.txtInfoLondon.TabIndex = 1;
+            this.txtInfoLondon.Text = "Asian: Total(###) Win(##) Loss(##) BE(##) | WinRate (##.#%)";
+            // 
+            // txtInfoAsian
+            // 
+            this.txtInfoAsian.AutoSize = true;
+            this.txtInfoAsian.Location = new System.Drawing.Point(3, 335);
+            this.txtInfoAsian.Name = "txtInfoAsian";
+            this.txtInfoAsian.Size = new System.Drawing.Size(350, 18);
+            this.txtInfoAsian.TabIndex = 1;
+            this.txtInfoAsian.Text = "Asian: Total(###) Win(##) Loss(##) BE(##) | WinRate (##.#%)";
             // 
             // grvRaw
             // 
@@ -546,38 +594,6 @@
             this.grvRaw.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grvRaw.Size = new System.Drawing.Size(634, 329);
             this.grvRaw.TabIndex = 0;
-            // 
-            // cbbFilePath
-            // 
-            this.cbbFilePath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbbFilePath.FormattingEnabled = true;
-            this.cbbFilePath.Location = new System.Drawing.Point(0, 0);
-            this.cbbFilePath.Name = "cbbFilePath";
-            this.cbbFilePath.Size = new System.Drawing.Size(504, 25);
-            this.cbbFilePath.TabIndex = 8;
-            this.cbbFilePath.SelectedIndexChanged += new System.EventHandler(this.cbbFilePath_SelectedIndexChanged);
-            // 
-            // btnRemove
-            // 
-            this.btnRemove.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRemove.Location = new System.Drawing.Point(578, 0);
-            this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(74, 24);
-            this.btnRemove.TabIndex = 0;
-            this.btnRemove.Text = "Remove";
-            this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.cbbFilePath);
-            this.panel1.Controls.Add(this.btnSelect);
-            this.panel1.Controls.Add(this.btnRemove);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(652, 24);
-            this.panel1.TabIndex = 9;
             // 
             // ID
             // 
@@ -613,53 +629,37 @@
             this.ProfitLoss.Name = "ProfitLoss";
             this.ProfitLoss.ReadOnly = true;
             // 
-            // txtInfoAsian
+            // cbbFilePath
             // 
-            this.txtInfoAsian.AutoSize = true;
-            this.txtInfoAsian.Location = new System.Drawing.Point(3, 335);
-            this.txtInfoAsian.Name = "txtInfoAsian";
-            this.txtInfoAsian.Size = new System.Drawing.Size(350, 18);
-            this.txtInfoAsian.TabIndex = 1;
-            this.txtInfoAsian.Text = "Asian: Total(###) Win(##) Loss(##) BE(##) | WinRate (##.#%)";
+            this.cbbFilePath.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbbFilePath.FormattingEnabled = true;
+            this.cbbFilePath.Location = new System.Drawing.Point(0, 0);
+            this.cbbFilePath.Name = "cbbFilePath";
+            this.cbbFilePath.Size = new System.Drawing.Size(504, 25);
+            this.cbbFilePath.TabIndex = 8;
+            this.cbbFilePath.SelectedIndexChanged += new System.EventHandler(this.cbbFilePath_SelectedIndexChanged);
             // 
-            // txtInfoLondon
+            // btnRemove
             // 
-            this.txtInfoLondon.AutoSize = true;
-            this.txtInfoLondon.Location = new System.Drawing.Point(3, 367);
-            this.txtInfoLondon.Name = "txtInfoLondon";
-            this.txtInfoLondon.Size = new System.Drawing.Size(350, 18);
-            this.txtInfoLondon.TabIndex = 1;
-            this.txtInfoLondon.Text = "Asian: Total(###) Win(##) Loss(##) BE(##) | WinRate (##.#%)";
+            this.btnRemove.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnRemove.Location = new System.Drawing.Point(578, 0);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(74, 24);
+            this.btnRemove.TabIndex = 0;
+            this.btnRemove.Text = "Remove";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
-            // txtInfoNY
+            // panel1
             // 
-            this.txtInfoNY.AutoSize = true;
-            this.txtInfoNY.Location = new System.Drawing.Point(3, 399);
-            this.txtInfoNY.Name = "txtInfoNY";
-            this.txtInfoNY.Size = new System.Drawing.Size(350, 18);
-            this.txtInfoNY.TabIndex = 1;
-            this.txtInfoNY.Text = "Asian: Total(###) Win(##) Loss(##) BE(##) | WinRate (##.#%)";
-            // 
-            // No
-            // 
-            this.No.HeaderText = "No.";
-            this.No.Name = "No";
-            this.No.ReadOnly = true;
-            this.No.Width = 30;
-            // 
-            // Ss
-            // 
-            this.Ss.HeaderText = "Ss.";
-            this.Ss.Name = "Ss";
-            this.Ss.ReadOnly = true;
-            this.Ss.Width = 30;
-            // 
-            // Profit
-            // 
-            this.Profit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Profit.HeaderText = "Profit";
-            this.Profit.Name = "Profit";
-            this.Profit.ReadOnly = true;
+            this.panel1.Controls.Add(this.cbbFilePath);
+            this.panel1.Controls.Add(this.btnSelect);
+            this.panel1.Controls.Add(this.btnRemove);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(652, 24);
+            this.panel1.TabIndex = 9;
             // 
             // MainForm
             // 
@@ -729,13 +729,6 @@
         private System.Windows.Forms.Label txtDetailAvgRR;
         private System.Windows.Forms.Label txtDetailWinRate;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CW;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Monday;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tuesday;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Wednesday;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Thursday;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Friday;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TOTAL;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn OpenTime;
@@ -747,6 +740,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn No;
         private System.Windows.Forms.DataGridViewTextBoxColumn Ss;
         private System.Windows.Forms.DataGridViewTextBoxColumn Profit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CW;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Monday;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tuesday;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Wednesday;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Thursday;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Friday;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TOTAL;
     }
 }
 
